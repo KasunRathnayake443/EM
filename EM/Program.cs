@@ -16,7 +16,7 @@ namespace EM
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Venues());
+            Application.Run(new Event());
         }
     }
 }
