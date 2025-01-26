@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[VenueTbl]
+(
+	[VId] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [VName] VARCHAR(50) NOT NULL, 
+    [VCapacity] INT NOT NULL, 
+    [VAddress] VARCHAR(100) NOT NULL, 
+    [VManager] VARCHAR(50) NOT NULL, 
+    [VPhone] VARCHAR(20) NOT NULL
+)
