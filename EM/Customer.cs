@@ -1,24 +1,35 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace EM
 {
     public partial class Customer : Form
     {
+        private MySqlConnection connection;
         public Customer()
         {
             InitializeComponent();
             ShowCustomer();
         }
 
+        private void Customer_Load(object sender, EventArgs e)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ConnectionString;
+            connection = new MySqlConnection(connectionString);
+            connection.Open();
+
+            
+        }
         private void label5_Click(object sender, EventArgs e)
         {
 
@@ -60,14 +71,7 @@ namespace EM
         }
         private void ShowCustomer()
         {
-            Con.Open();
-            String Query = "Select * from CustomerTbl";
-            SqlDataAdapter sda = new SqlDataAdapter(Query, Con);
-            SqlCommandBuilder builder = new SqlCommandBuilder(sda);
-            var ds = new DataSet();
-            sda.Fill(ds);
-            CustomerDGV.DataSource = ds.Tables[0];
-            Con.Close();
+           
         }
         private void Clear()
         {
@@ -75,105 +79,28 @@ namespace EM
             CusPhonetxt.Text = "";
             
         }
-        SqlConnection Con = new SqlConnection(@"Data Source=MAHINDA\SQLEXPRESS;Initial Catalog=EventsDb;Integrated Security=True");
+        
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            if (Customertxt.Text == "" || CusPhonetxt.Text == "" )
-            {
-                MessageBox.Show("Missing Information");
-            }
-            else
-            {
-                try
-                {
-                    Con.Open();
-                    SqlCommand cmd = new SqlCommand("Insert into CustomerTbl(CusName,CusPhone)Values(@CN,@CP)", Con);
-                    cmd.Parameters.AddWithValue("@CN", Customertxt.Text);
-                    cmd.Parameters.AddWithValue("@CP", CusPhonetxt.Text);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Customer Added");
-                    Con.Close();
-                    ShowCustomer();
-                    Clear();
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-            }
+            
 
         }
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
-            if (Customertxt.Text == "" || CusPhonetxt.Text == "")
-            {
-                MessageBox.Show("Missing Information");
-            }
-            else
-            {
-                try
-                {
-                    Con.Open();
-                    SqlCommand cmd = new SqlCommand("Update CustomerTbl Set Customer=@CN,Cusphone=@CP where CusId=@Ckey");
-                    cmd.Parameters.AddWithValue("@CN", Customertxt.Text);
-                    cmd.Parameters.AddWithValue("@CP", CusPhonetxt.Text);
-                    cmd.Parameters.AddWithValue("@CKey", Key);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Customer Updated");
-                    Con.Close();
-                    ShowCustomer();
-                    Clear();
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-            }
+           
 
         }
-        int Key = 0;
+       
         private void CustomerDGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            Customertxt.Text = CustomerDGV.SelectedRows[0].Cells[1].Value.ToString();
-            CusPhonetxt.Text = CustomerDGV.SelectedRows[0].Cells[2].Value.ToString();
             
-            if (Customertxt.Text == "")
-            {
-                Key = 0;
-            }
-            else
-            {
-                Key = Convert.ToInt32(CustomerDGV.SelectedRows[0].Cells[0].Value.ToString());
-            }
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            if (Key == 0)
-            {
-                MessageBox.Show("Select the Customer");
-            }
-            else
-            {
-                try
-                {
-                    Con.Open();
-                    SqlCommand cmd = new SqlCommand("Delete from CustomerTbl Where CId=@CKey", Con);
-                    cmd.Parameters.AddWithValue("@CKey", Key);
-
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Customer Deleted");
-                    Con.Close();
-                    ShowCustomer();
-                    Clear();
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-            }
+            
         }
 
         private void pictureBox5_Click(object sender, EventArgs e)

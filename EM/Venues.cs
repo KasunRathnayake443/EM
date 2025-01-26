@@ -1,40 +1,114 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace EM
 {
     public partial class Venues : Form
     {
+        private MySqlConnection connection;
         public Venues()
         {
             InitializeComponent();
-            ShowVenues();
+            
         }
 
         private void Venues_Load(object sender, EventArgs e)
         {
+            string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ConnectionString;
+            connection = new MySqlConnection(connectionString);
+            connection.Open();
+
+            LoadVenues();
+            CustomizeDataGridView();
+            venuesDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            venuesDataGrid.MultiSelect = false; 
+        }
+
+        private void LoadVenues()
+        {
+            try
+            {
+              
+                string query = "SELECT * FROM venues";
+
+                
+                MySqlDataAdapter adapter = new MySqlDataAdapter(query, connection);
+                DataTable venuesTable = new DataTable();
+                adapter.Fill(venuesTable);
+
+               
+                venuesDataGrid.DataSource = venuesTable;
+
+           
+                venuesDataGrid.Columns["venue_ID"].HeaderText = "ID";
+                venuesDataGrid.Columns["venue_name"].HeaderText = "Venue Name";
+                venuesDataGrid.Columns["capacity"].HeaderText = "Capacity";
+                venuesDataGrid.Columns["address"].HeaderText = "Address";
+                venuesDataGrid.Columns["manager"].HeaderText = "Manager";
+                venuesDataGrid.Columns["phone"].HeaderText = "Phone Number";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading venues: " + ex.Message);
+            }
+          
+
 
         }
-        private void ShowVenues()
+
+        private void CustomizeDataGridView()
         {
-            Con.Open();
-            String Query = "Select * from VenueTbl";
-            SqlDataAdapter sda = new SqlDataAdapter(Query, Con);
-            SqlCommandBuilder builder = new SqlCommandBuilder(sda);
-            var ds = new DataSet();
-            sda.Fill(ds);
-            VenueDGV.DataSource = ds.Tables[0];
-            Con.Close();
+            
+            venuesDataGrid.BackgroundColor = Color.White;
+            venuesDataGrid.BorderStyle = BorderStyle.None;
+            venuesDataGrid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            venuesDataGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+
+           
+            venuesDataGrid.EnableHeadersVisualStyles = false;
+            venuesDataGrid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(41, 128, 185); 
+            venuesDataGrid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            venuesDataGrid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            venuesDataGrid.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+           
+            venuesDataGrid.DefaultCellStyle.BackColor = Color.White;
+            venuesDataGrid.DefaultCellStyle.ForeColor = Color.Black;
+            venuesDataGrid.DefaultCellStyle.Font = new Font("Segoe UI", 8);
+            venuesDataGrid.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219); 
+            venuesDataGrid.DefaultCellStyle.SelectionForeColor = Color.White;
+
+           
+            venuesDataGrid.GridColor = Color.FromArgb(230, 230, 230);
+
+            venuesDataGrid.RowHeadersVisible = false;
+
+           
+            venuesDataGrid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+            venuesDataGrid.AlternatingRowsDefaultCellStyle.ForeColor = Color.Black;
+
+         
+            venuesDataGrid.DefaultCellStyle.Padding = new Padding(5);
+
+            
+            venuesDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            venuesDataGrid.ColumnHeadersHeight = 40;
+            venuesDataGrid.RowTemplate.Height = 40;
+
+           
+            venuesDataGrid.AdvancedCellBorderStyle.All = DataGridViewAdvancedCellBorderStyle.None;
         }
+
         private void Clear()
         {
             VenueNametxt.Text = "";
@@ -43,52 +117,69 @@ namespace EM
             Addresstxt.Text = "";
             VenueManagertxt.Text = "";
         }
-        SqlConnection Con = new SqlConnection(@"Data Source=MAHINDA\SQLEXPRESS;Initial Catalog=EventsDb;Integrated Security=True");
+        
         private void Savebtn_Click(object sender, EventArgs e)
-        { 
-                if (Addresstxt.Text == "" || VenueNametxt.Text == "" || Phonetxt.Text == "" || Capacitytxt.Text == "" || VenueManagertxt.Text == "")
+        {
+            if (string.IsNullOrWhiteSpace(Addresstxt.Text) ||
+        string.IsNullOrWhiteSpace(VenueNametxt.Text) ||
+        string.IsNullOrWhiteSpace(Phonetxt.Text) ||
+        string.IsNullOrWhiteSpace(Capacitytxt.Text) ||
+        string.IsNullOrWhiteSpace(VenueManagertxt.Text))
+            {
+                MessageBox.Show("Missing Information");
+                return;
+            }
+
+            try
+            {
+               
+                
+
+                
+                string query = "INSERT INTO venues (venue_name, capacity, address, manager, phone) VALUES (@VN, @VC, @VA, @VM, @VP)";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
                 {
-                    MessageBox.Show("Missing Information");
+                   
+                    cmd.Parameters.AddWithValue("@VN", VenueNametxt.Text);
+                    cmd.Parameters.AddWithValue("@VC", Capacitytxt.Text);
+                    cmd.Parameters.AddWithValue("@VA", Addresstxt.Text);
+                    cmd.Parameters.AddWithValue("@VM", VenueManagertxt.Text);
+                    cmd.Parameters.AddWithValue("@VP", Phonetxt.Text);
+
+                   
+                    cmd.ExecuteNonQuery();
                 }
-                else
-                {
-                    try
-                    {
-                        Con.Open();
-                        SqlCommand cmd = new SqlCommand("Insert into VenueTbl(VenueName,Capacity,Address,VenueManager,phone)Values(@VN,@VC,@VA,@VM,@VP)", Con);
-                        cmd.Parameters.AddWithValue("@VN", VenueNametxt.Text);
-                        cmd.Parameters.AddWithValue("@VC", Capacitytxt.Text);
-                        cmd.Parameters.AddWithValue("@VA", Addresstxt.Text);
-                        cmd.Parameters.AddWithValue("@VM", VenueManagertxt.Text);
-                        cmd.Parameters.AddWithValue("@VP", Phonetxt.Text);
-                        cmd.ExecuteNonQuery();
-                        MessageBox.Show("Venue Added");
-                        Con.Close();
-                        ShowVenues();
-                        Clear();
-                    }
-                    catch (Exception Ex)
-                    {
-                        MessageBox.Show(Ex.Message);
-                    }
-                }
+
+                MessageBox.Show("Venue Added");
+
+                
+                LoadVenues();
+                Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+           
+
         }
-        int key = 0;
+      
         private void VenuesDGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            VenueNametxt.Text = VenueDGV.SelectedRows[0].Cells[1].Value.ToString();
-            Capacitytxt.Text = VenueDGV.SelectedRows[0].Cells[2].Value.ToString();
-            Addresstxt.Text = VenueDGV.SelectedRows[0].Cells[3].Value.ToString();
-            VenueManagertxt.Text = VenueDGV.SelectedRows[0].Cells[4].Value.ToString();
-            Phonetxt.Text = VenueDGV.SelectedRows[0].Cells[5].Value.ToString();
-            if (VenueNametxt.Text == "")
-            {
-                key = 0;
-            }
-            else
-            {
-                key = Convert.ToInt32(VenueDGV.SelectedRows[0].Cells[0].Value.ToString());
-            }
+            //VenueNametxt.Text = VenueDGV.SelectedRows[0].Cells[1].Value.ToString();
+            //Capacitytxt.Text = VenueDGV.SelectedRows[0].Cells[2].Value.ToString();
+            //Addresstxt.Text = VenueDGV.SelectedRows[0].Cells[3].Value.ToString();
+            //VenueManagertxt.Text = VenueDGV.SelectedRows[0].Cells[4].Value.ToString();
+            //Phonetxt.Text = VenueDGV.SelectedRows[0].Cells[5].Value.ToString();
+            //if (VenueNametxt.Text == "")
+            //{
+            //    key = 0;
+            //}
+            //else
+            //{
+            //    key = Convert.ToInt32(VenueDGV.SelectedRows[0].Cells[0].Value.ToString());
+            //}
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -103,58 +194,74 @@ namespace EM
 
         private void Deletebtn_Click(object sender, EventArgs e)
         {
-            if (key == 0)
+            
+            if (venuesDataGrid.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Select the Venue");
+                MessageBox.Show("Please select a row to delete.");
+                return;
             }
-            else
+
+            
+            DataGridViewRow selectedRow = venuesDataGrid.SelectedRows[0];
+            int venueID = Convert.ToInt32(selectedRow.Cells["venue_ID"].Value);
+
+            
+            DialogResult confirmResult = MessageBox.Show(
+                "Are you sure you want to delete this venue?",
+                "Confirm Deletion",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (confirmResult == DialogResult.Yes)
             {
                 try
                 {
-                    Con.Open();
-                    SqlCommand cmd = new SqlCommand("Delete from VenueTbl Where VId=@VKey", Con);
-                    cmd.Parameters.AddWithValue("@VKey", key);
+                    
 
+                    
+                    string deleteQuery = "DELETE FROM venues WHERE venue_ID = @VenueID";
+                    MySqlCommand cmd = new MySqlCommand(deleteQuery, connection);
+                    cmd.Parameters.AddWithValue("@VenueID", venueID);
                     cmd.ExecuteNonQuery();
-                    MessageBox.Show("Venue Deleted");
-                    Con.Close();
-                    ShowVenues();
-                    Clear();
+
+                    MessageBox.Show("Venue deleted successfully.");
+
+                    
+                    LoadVenues();
                 }
-                catch (Exception Ex)
+                catch (Exception ex)
                 {
-                    MessageBox.Show(Ex.Message);
+                    MessageBox.Show("Error deleting venue: " + ex.Message);
                 }
+               
             }
         }
 
         private void Editbtn_Click(object sender, EventArgs e)
         {
-            if (Addresstxt.Text == "" || VenueNametxt.Text == "" || Phonetxt.Text == "" || Capacitytxt.Text == "" || VenueManagertxt.Text == "")
+            if (venuesDataGrid.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Missing Information");
+                MessageBox.Show("Please select a row to edit.");
+                return;
             }
-            else
+
+           
+            DataGridViewRow selectedRow = venuesDataGrid.SelectedRows[0];
+            int venueID = Convert.ToInt32(selectedRow.Cells["venue_ID"].Value);
+            string venueName = selectedRow.Cells["venue_name"].Value.ToString();
+            string capacity = selectedRow.Cells["capacity"].Value.ToString();
+            string address = selectedRow.Cells["address"].Value.ToString();
+            string manager = selectedRow.Cells["manager"].Value.ToString();
+            string phone = selectedRow.Cells["phone"].Value.ToString();
+
+           
+            using (EditVenueForm editDialog = new EditVenueForm(venueID, venueName, capacity, address, manager, phone, connection))
             {
-                try
+                if (editDialog.ShowDialog() == DialogResult.OK)
                 {
-                    Con.Open();
-                    SqlCommand cmd = new SqlCommand("Update VenueTbl set VenueName=@VN,Capacity=@VC,Address=@VA,VenueManager=@VM,phone=@VP where VId=@VKey");
-                    cmd.Parameters.AddWithValue("@VN", VenueNametxt.Text);
-                    cmd.Parameters.AddWithValue("@VC", Capacitytxt.Text);
-                    cmd.Parameters.AddWithValue("@VA", Addresstxt.Text);
-                    cmd.Parameters.AddWithValue("@VM", VenueManagertxt.Text);
-                    cmd.Parameters.AddWithValue("@VP", Phonetxt.Text);
-                    cmd.Parameters.AddWithValue("@VKey", key);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Venue Updated");
-                    Con.Close();
-                    ShowVenues();
-                    Clear();
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
+                    
+                    LoadVenues();
                 }
             }
         }

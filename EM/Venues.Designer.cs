@@ -35,7 +35,7 @@ namespace EM
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.VenueDGV = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
-            this.VenuesDGV = new System.Windows.Forms.DataGridView();
+            this.venuesDataGrid = new System.Windows.Forms.DataGridView();
             this.Capacitytxt = new System.Windows.Forms.TextBox();
             this.VenueManagertxt = new System.Windows.Forms.TextBox();
             this.Phonetxt = new System.Windows.Forms.TextBox();
@@ -60,7 +60,7 @@ namespace EM
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VenueDGV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VenuesDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.venuesDataGrid)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
@@ -125,15 +125,16 @@ namespace EM
             this.label1.TabIndex = 1;
             this.label1.Text = "Manage Venue";
             // 
-            // VenuesDGV
+            // venuesDataGrid
             // 
-            this.VenuesDGV.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.VenuesDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.VenuesDGV.Location = new System.Drawing.Point(3, 73);
-            this.VenuesDGV.Name = "VenuesDGV";
-            this.VenuesDGV.Size = new System.Drawing.Size(831, 163);
-            this.VenuesDGV.TabIndex = 24;
-            this.VenuesDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.VenuesDGV_CellContentClick);
+            this.venuesDataGrid.AllowUserToResizeRows = false;
+            this.venuesDataGrid.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.venuesDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.venuesDataGrid.Location = new System.Drawing.Point(3, 73);
+            this.venuesDataGrid.Name = "venuesDataGrid";
+            this.venuesDataGrid.Size = new System.Drawing.Size(831, 163);
+            this.venuesDataGrid.TabIndex = 24;
+            this.venuesDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.VenuesDGV_CellContentClick);
             // 
             // Capacitytxt
             // 
@@ -364,7 +365,7 @@ namespace EM
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.VenueNametxt);
-            this.Controls.Add(this.VenuesDGV);
+            this.Controls.Add(this.venuesDataGrid);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Venues";
@@ -375,7 +376,7 @@ namespace EM
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VenueDGV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VenuesDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.venuesDataGrid)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
@@ -394,7 +395,7 @@ namespace EM
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.DataGridView VenueDGV;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView VenuesDGV;
+        private System.Windows.Forms.DataGridView venuesDataGrid;
         private System.Windows.Forms.TextBox Capacitytxt;
         private System.Windows.Forms.TextBox VenueManagertxt;
         private System.Windows.Forms.TextBox Phonetxt;

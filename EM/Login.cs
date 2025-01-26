@@ -48,7 +48,7 @@ namespace EM
             {
                 MessageBox.Show("Enter Both UserName and Password");
             }
-            else if(UserNametxt.Text == "Admin" && Passwordtxt.Text=="Password")
+            else if(UserNametxt.Text == "admin" && Passwordtxt.Text=="123")
             {
                 Event Obj = new Event();
                 Obj.Show();

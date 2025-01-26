@@ -102,25 +102,25 @@ namespace EM
         }
         private void ShowEvent()
         {
-            SqlConnection Con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Mahinda-Pc\Documents\EventsDb.mdf;Integrated Security=True;Connect Timeout=30");
-            try
-            {
-                Con.Open();
-                String Query = "Select * from EventTbl";
-                SqlDataAdapter sda = new SqlDataAdapter(Query, Con);
-                SqlCommandBuilder builder = new SqlCommandBuilder(sda);
-                var ds = new DataSet();
-                sda.Fill(ds);
-                EventDGV.DataSource = ds.Tables[0];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                Con.Close();
-            }
+            //SqlConnection Con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Mahinda-Pc\Documents\EventsDb.mdf;Integrated Security=True;Connect Timeout=30");
+            //try
+            //{
+            //    Con.Open();
+            //    String Query = "Select * from EventTbl";
+            //    SqlDataAdapter sda = new SqlDataAdapter(Query, Con);
+            //    SqlCommandBuilder builder = new SqlCommandBuilder(sda);
+            //    var ds = new DataSet();
+            //    sda.Fill(ds);
+            //    EventDGV.DataSource = ds.Tables[0];
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
+            //finally
+            //{
+            //    Con.Close();
+            //}
         }
         private void Clear()
         {
@@ -130,97 +130,97 @@ namespace EM
             Statuscb.SelectedIndex = -1;
             EvVenueNametxt.Text = "";
         }
-        SqlConnection Con = new SqlConnection(@"Data Source=MAHINDA\SQLEXPRESS;Initial Catalog=EventsDb;Integrated Security=True");
+        //SqlConnection Con = new SqlConnection(@"Data Source=MAHINDA\SQLEXPRESS;Initial Catalog=EventsDb;Integrated Security=True");
 
         private void GetCustomer()
 
         {
-            Con.Open();
-            SqlCommand cmd = new SqlCommand("Select CusId from CustomerTbl", Con);
-            SqlDataReader Rdr;
-            Rdr = cmd.ExecuteReader();
-            DataTable dt = new DataTable();
-            dt.Columns.Add("CusId", typeof(int));
-            dt.Load(Rdr);
-            CusIdcb.ValueMember = "CusId";
-            CusIdcb.DataSource = dt;
-            Con.Close();
+            //Con.Open();
+            //SqlCommand cmd = new SqlCommand("Select CusId from CustomerTbl", Con);
+            //SqlDataReader Rdr;
+            //Rdr = cmd.ExecuteReader();
+            //DataTable dt = new DataTable();
+            //dt.Columns.Add("CusId", typeof(int));
+            //dt.Load(Rdr);
+            //CusIdcb.ValueMember = "CusId";
+            //CusIdcb.DataSource = dt;
+            //Con.Close();
         }
 
         
         private void GetCustomerName()
         {
-            //Con.Open();
-            String Query = "Select * from CustomerTbl where CusId" + CusIdcb.SelectedValue.ToString() + "";
-            SqlCommand cmd = new SqlCommand(Query, Con);
-            DataTable dt = new DataTable();
-            SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            sda.Fill(dt);
-            foreach (DataRow dr in dt.Rows)
-            {
-                CusNametxt.Text = dr["CusName"].ToString();
-            }
-            Con.Close();
+            ////Con.Open();
+            //String Query = "Select * from CustomerTbl where CusId" + CusIdcb.SelectedValue.ToString() + "";
+            //SqlCommand cmd = new SqlCommand(Query, Con);
+            //DataTable dt = new DataTable();
+            //SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            //sda.Fill(dt);
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    CusNametxt.Text = dr["CusName"].ToString();
+            //}
+            //Con.Close();
         }
         
         private void GetVenue()
         {
-            Con.Open();
-            SqlCommand cmd = new SqlCommand("Select VId from VenueTbl", Con);
-            SqlDataReader Rdr;
-            Rdr = cmd.ExecuteReader();
-            DataTable dt = new DataTable();
-            dt.Columns.Add("VId", typeof(int));
-            dt.Load(Rdr);
-            EvVIdcb.ValueMember = "VId";
-            EvVIdcb.DataSource = dt;
-            Con.Close();
+        //    Con.Open();
+        //    SqlCommand cmd = new SqlCommand("Select VId from VenueTbl", Con);
+        //    SqlDataReader Rdr;
+        //    Rdr = cmd.ExecuteReader();
+        //    DataTable dt = new DataTable();
+        //    dt.Columns.Add("VId", typeof(int));
+        //    dt.Load(Rdr);
+        //    EvVIdcb.ValueMember = "VId";
+        //    EvVIdcb.DataSource = dt;
+        //    Con.Close();
         }
         private void GetEvVenueNametxt()
         {
-            Con.Open();
-            String Query = "Select * from VenueTbl where VId" + EvVIdcb.SelectedValue.ToString() + "";
-            SqlCommand cmd = new SqlCommand(Query, Con);
-            DataTable dt = new DataTable();
-            SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            sda.Fill(dt);
-            foreach (DataRow dr in dt.Rows)
-            {
-                EventNametxt.Text = dr["VName"].ToString();
-            }
-            Con.Close();
+            //Con.Open();
+            //String Query = "Select * from VenueTbl where VId" + EvVIdcb.SelectedValue.ToString() + "";
+            //SqlCommand cmd = new SqlCommand(Query, Con);
+            //DataTable dt = new DataTable();
+            //SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            //sda.Fill(dt);
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    EventNametxt.Text = dr["VName"].ToString();
+            //}
+            //Con.Close();
         }
         private void Savebtn_Click(object sender, EventArgs e)
         {
-            if (EventNametxt.Text == "" || EvVenueNametxt.Text == "" || CusNametxt.Text == "" || Durationtxt.Text == "" || Statuscb.SelectedIndex == -1)
-            {
-                MessageBox.Show("Missing Information");
-            }
-            else
-            {
-                try
-                {
-                    Con.Open();
-                    SqlCommand cmd = new SqlCommand("Insert into EventTbl(EventName,EvDate,EvVId,VenueName,EvDuration,CustId,CustName,Status)Values(@EN,@ED,@VI,@EV,@EDU,@ECI,@ECN,@ES)", Con);
-                    cmd.Parameters.AddWithValue("@EN", EventNametxt.Text);
-                    cmd.Parameters.AddWithValue("@ED", EvDate.Text);
-                    cmd.Parameters.AddWithValue("@VI", EvVIdcb.SelectedValue.ToString());
-                    cmd.Parameters.AddWithValue("@EV", EvVenueNametxt.Text);
-                    cmd.Parameters.AddWithValue("@EDU", Durationtxt.Text);
-                    cmd.Parameters.AddWithValue("@ECI", CusIdcb.SelectedValue.ToString());
-                    cmd.Parameters.AddWithValue("@ECN", CusNametxt.Text);
-                    cmd.Parameters.AddWithValue("@ES", Statuscb.SelectedValue.ToString());
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Venue Added");
-                    Con.Close();
-                    ShowEvent();
-                    Clear();
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-            }
+            //if (EventNametxt.Text == "" || EvVenueNametxt.Text == "" || CusNametxt.Text == "" || Durationtxt.Text == "" || Statuscb.SelectedIndex == -1)
+            //{
+            //    MessageBox.Show("Missing Information");
+            //}
+            //else
+            //{
+            //    try
+            //    {
+            //        Con.Open();
+            //        SqlCommand cmd = new SqlCommand("Insert into EventTbl(EventName,EvDate,EvVId,VenueName,EvDuration,CustId,CustName,Status)Values(@EN,@ED,@VI,@EV,@EDU,@ECI,@ECN,@ES)", Con);
+            //        cmd.Parameters.AddWithValue("@EN", EventNametxt.Text);
+            //        cmd.Parameters.AddWithValue("@ED", EvDate.Text);
+            //        cmd.Parameters.AddWithValue("@VI", EvVIdcb.SelectedValue.ToString());
+            //        cmd.Parameters.AddWithValue("@EV", EvVenueNametxt.Text);
+            //        cmd.Parameters.AddWithValue("@EDU", Durationtxt.Text);
+            //        cmd.Parameters.AddWithValue("@ECI", CusIdcb.SelectedValue.ToString());
+            //        cmd.Parameters.AddWithValue("@ECN", CusNametxt.Text);
+            //        cmd.Parameters.AddWithValue("@ES", Statuscb.SelectedValue.ToString());
+            //        cmd.ExecuteNonQuery();
+            //        MessageBox.Show("Venue Added");
+            //        Con.Close();
+            //        ShowEvent();
+            //        Clear();
+            //    }
+            //    catch (Exception Ex)
+            //    {
+            //        MessageBox.Show(Ex.Message);
+            //    }
+            //}
         }
 
         private void pictureBox5_Click_1(object sender, EventArgs e)
@@ -250,36 +250,36 @@ namespace EM
 
         private void Editbtn_Click(object sender, EventArgs e)
         {
-            if (EventNametxt.Text == "" || EvVenueNametxt.Text == "" || CusNametxt.Text == "" || Durationtxt.Text == "" || Statuscb.SelectedIndex == -1)
-            {
-                MessageBox.Show("Missing Information");
-            }
-            else
-            {
-                try
-                {
-                    Con.Open();
-                    SqlCommand cmd = new SqlCommand("Update EventTbl Set EventName=@EN,EvDate=@ED,EvVId=@VI,VenueName=@EV,EvDuration=@EDU,CusId=@ECI,CustName=@ECN,Status=@ES where EvId=@Ekey", Con);
-                    cmd.Parameters.AddWithValue("@EN", EventNametxt.Text);
-                    cmd.Parameters.AddWithValue("@ED", EvDate.Text);
-                    cmd.Parameters.AddWithValue("@VI", EvVIdcb.SelectedValue.ToString());
-                    cmd.Parameters.AddWithValue("@EV", EvVenueNametxt.Text);
-                    cmd.Parameters.AddWithValue("@EDU", Durationtxt.Text);
-                    cmd.Parameters.AddWithValue("@ECI", CusIdcb.SelectedValue.ToString());
-                    cmd.Parameters.AddWithValue("@ECN", CusNametxt.Text);
-                    cmd.Parameters.AddWithValue("@ES", Statuscb.SelectedValue.ToString());
-                    cmd.Parameters.AddWithValue("@EKey", key);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Event Updated");
-                    Con.Close();
-                    ShowEvent();
-                    Clear();
-                }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show(Ex.Message);
-                }
-            }
+            //if (EventNametxt.Text == "" || EvVenueNametxt.Text == "" || CusNametxt.Text == "" || Durationtxt.Text == "" || Statuscb.SelectedIndex == -1)
+            //{
+            //    MessageBox.Show("Missing Information");
+            //}
+            //else
+            //{
+            //    try
+            //    {
+            //        Con.Open();
+            //        SqlCommand cmd = new SqlCommand("Update EventTbl Set EventName=@EN,EvDate=@ED,EvVId=@VI,VenueName=@EV,EvDuration=@EDU,CusId=@ECI,CustName=@ECN,Status=@ES where EvId=@Ekey", Con);
+            //        cmd.Parameters.AddWithValue("@EN", EventNametxt.Text);
+            //        cmd.Parameters.AddWithValue("@ED", EvDate.Text);
+            //        cmd.Parameters.AddWithValue("@VI", EvVIdcb.SelectedValue.ToString());
+            //        cmd.Parameters.AddWithValue("@EV", EvVenueNametxt.Text);
+            //        cmd.Parameters.AddWithValue("@EDU", Durationtxt.Text);
+            //        cmd.Parameters.AddWithValue("@ECI", CusIdcb.SelectedValue.ToString());
+            //        cmd.Parameters.AddWithValue("@ECN", CusNametxt.Text);
+            //        cmd.Parameters.AddWithValue("@ES", Statuscb.SelectedValue.ToString());
+            //        cmd.Parameters.AddWithValue("@EKey", key);
+            //        cmd.ExecuteNonQuery();
+            //        MessageBox.Show("Event Updated");
+            //        Con.Close();
+            //        ShowEvent();
+            //        Clear();
+            //    }
+            //    catch (Exception Ex)
+            //    {
+            //        MessageBox.Show(Ex.Message);
+            //    }
+            //}
         }
         int key = 0;
         private void EventDGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
