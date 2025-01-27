@@ -268,5 +268,12 @@ namespace EM
         {
             Clear();
         }
+
+        private void pictureBox8_Click(object sender, EventArgs e)
+        {
+            Venues obj = new Venues();
+            obj.Show();
+            this.Hide();
+        }
     }
 }

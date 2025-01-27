@@ -286,6 +286,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EditVenueForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EditVenueForm";
             this.Load += new System.EventHandler(this.EditVenueForm_Load);
             this.panel1.ResumeLayout(false);

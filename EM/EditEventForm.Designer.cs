@@ -225,6 +225,7 @@
             this.Controls.Add(this.label2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "EditEventForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EditEventForm";
             this.Load += new System.EventHandler(this.EditEventForm_Load);
             this.panel1.ResumeLayout(false);

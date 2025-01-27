@@ -181,6 +181,7 @@
             this.Controls.Add(this.UpdateBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "EditCustomerForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EditCustomerForm";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

@@ -300,6 +300,13 @@ namespace EM
             Obj.Show();
             this.Hide();
         }
+
+        private void pictureBox9_Click(object sender, EventArgs e)
+        {
+            Venues obj = new Venues();
+            obj.Show();
+            this.Hide();
+        }
     }
     
     

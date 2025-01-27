@@ -271,6 +271,14 @@ namespace EM
                 
             }
         }
+
+        private void pictureBox7_Click(object sender, EventArgs e)
+        {
+           
+            Venues obj = new Venues();
+            obj.Show();
+            this.Hide();
+        }
     }
 }
     

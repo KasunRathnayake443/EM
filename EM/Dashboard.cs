@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Management.Instrumentation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,78 +17,9 @@ namespace EM
         public Dashboard()
         {
             InitializeComponent();
-            countEvents();
-            countVenues();
-            countCustomers();
-            countExcellent();
-            countGood();
-            countOk();
-            countBad();
         }
-        SqlConnection Con = new SqlConnection(@"Data Source=MAHINDA\SQLEXPRESS;Initial Catalog=EventsDb;Integrated Security=True");
-        private void countEvents()
-        {
-            Con.Open();
-            SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) from EventTbl", Con);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            EventLbl.Text = dt.Rows[0][0].ToString();
-            Con.Close();
-        }
-        private void countCustomers()
-        {
-            Con.Open();
-            SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) from CustomerTbl", Con);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            CustomerLbl.Text = dt.Rows[0][0].ToString();
-            Con.Close();
-        }
-        private void countVenues()
-        {
-            Con.Open();
-            SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) from VenueTbl", Con);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            VenueLbl.Text = dt.Rows[0][0].ToString();
-            Con.Close();
-        }
-        private void countExcellent()
-        {
-            Con.Open();
-            SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) from FeedBackTbl where OverAll =" + 4 + "", Con);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            ExcellentLbl.Text = dt.Rows[0][0].ToString();
-            Con.Close();
-        }
-        private void countGood()
-        {
-            Con.Open();
-            SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) from FeedBackTbl where OverAll =" + 3 + "", Con);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            GoodLbl.Text = dt.Rows[0][0].ToString();
-            Con.Close();
-        }
-        private void countOk()
-        {
-            Con.Open();
-            SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) from FeedBackTbl where OverAll =" + 2 + "", Con);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            ExcellentLbl.Text = dt.Rows[0][0].ToString();
-            Con.Close();
-        }
-        private void countBad()
-        {
-            Con.Open();
-            SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) from FeedBackTbl where OverAll =" + 1 + "", Con);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            BadLbl.Text = dt.Rows[0][0].ToString();
-            Con.Close();
-        }
+       
+        
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -182,7 +114,7 @@ namespace EM
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
-            Venues Obj = new Venues();
+            Event Obj = new Event();
             Obj.Show();
             this.Hide();
         }
@@ -196,12 +128,14 @@ namespace EM
 
         private void ExcellentLbl_Click(object sender, EventArgs e)
         {
-            Con.Open();
-            SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) from EventTbl", Con);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            EventLbl.Text = dt.Rows[0][0].ToString();
-            Con.Close();
+            
+        }
+
+        private void pictureBox8_Click(object sender, EventArgs e)
+        {
+            Venues obj = new Venues();
+            obj.Show();
+            this.Hide();
         }
     }
 }
