@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2025 at 11:07 AM
+-- Generation Time: Jan 27, 2025 at 03:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -84,7 +84,8 @@ CREATE TABLE `feedbacks` (
 
 INSERT INTO `feedbacks` (`id`, `Event_name`, `Punctuality`, `Hospitality`) VALUES
 (1, '11', 'Excellent', 'OK'),
-(2, 'Test', 'Good', 'OK');
+(2, 'Test', 'Good', 'OK'),
+(3, 'Test', 'OK', 'Good');
 
 -- --------------------------------------------------------
 
@@ -157,7 +158,7 @@ ALTER TABLE `event`
 -- AUTO_INCREMENT for table `feedbacks`
 --
 ALTER TABLE `feedbacks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `venues`
