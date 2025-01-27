@@ -40,9 +40,11 @@ namespace EM
             this.Passwordtxt = new System.Windows.Forms.TextBox();
             this.UserNametxt = new System.Windows.Forms.TextBox();
             this.Loginbtn = new System.Windows.Forms.Button();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -153,12 +155,24 @@ namespace EM
             this.Loginbtn.UseVisualStyleBackColor = true;
             this.Loginbtn.Click += new System.EventHandler(this.button1_Click);
             // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+            this.pictureBox5.Location = new System.Drawing.Point(247, 12);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(28, 23);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox5.TabIndex = 12;
+            this.pictureBox5.TabStop = false;
+            this.pictureBox5.Click += new System.EventHandler(this.pictureBox5_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Olive;
             this.ClientSize = new System.Drawing.Size(287, 404);
+            this.Controls.Add(this.pictureBox5);
             this.Controls.Add(this.Loginbtn);
             this.Controls.Add(this.UserNametxt);
             this.Controls.Add(this.Passwordtxt);
@@ -176,6 +190,7 @@ namespace EM
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -193,6 +208,7 @@ namespace EM
         private System.Windows.Forms.TextBox Passwordtxt;
         private System.Windows.Forms.TextBox UserNametxt;
         private System.Windows.Forms.Button Loginbtn;
+        private System.Windows.Forms.PictureBox pictureBox5;
     }
 }
 

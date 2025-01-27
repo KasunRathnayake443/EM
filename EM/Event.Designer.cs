@@ -50,7 +50,7 @@ namespace EM
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Durationtxt = new System.Windows.Forms.TextBox();
-            this.EventDGV = new System.Windows.Forms.DataGridView();
+            this.EventDataGrid = new System.Windows.Forms.DataGridView();
             this.Statuscb = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -66,7 +66,7 @@ namespace EM
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EventDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EventDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -196,6 +196,7 @@ namespace EM
             this.Deletebtn.TabIndex = 18;
             this.Deletebtn.Text = "Delete";
             this.Deletebtn.UseVisualStyleBackColor = false;
+            this.Deletebtn.Click += new System.EventHandler(this.Deletebtn_Click);
             // 
             // panel2
             // 
@@ -284,15 +285,17 @@ namespace EM
             this.Durationtxt.Size = new System.Drawing.Size(120, 20);
             this.Durationtxt.TabIndex = 22;
             // 
-            // EventDGV
+            // EventDataGrid
             // 
-            this.EventDGV.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.EventDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.EventDGV.Location = new System.Drawing.Point(0, 63);
-            this.EventDGV.Name = "EventDGV";
-            this.EventDGV.Size = new System.Drawing.Size(815, 188);
-            this.EventDGV.TabIndex = 23;
-            this.EventDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.EventDGV_CellContentClick);
+            this.EventDataGrid.AllowUserToAddRows = false;
+            this.EventDataGrid.AllowUserToResizeRows = false;
+            this.EventDataGrid.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.EventDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.EventDataGrid.Location = new System.Drawing.Point(0, 63);
+            this.EventDataGrid.Name = "EventDataGrid";
+            this.EventDataGrid.Size = new System.Drawing.Size(815, 188);
+            this.EventDataGrid.TabIndex = 23;
+            this.EventDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.EventDGV_CellContentClick);
             // 
             // Statuscb
             // 
@@ -358,7 +361,7 @@ namespace EM
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.Statuscb);
-            this.Controls.Add(this.EventDGV);
+            this.Controls.Add(this.EventDataGrid);
             this.Controls.Add(this.Durationtxt);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.Deletebtn);
@@ -385,7 +388,7 @@ namespace EM
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EventDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EventDataGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -413,7 +416,7 @@ namespace EM
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.TextBox Durationtxt;
         private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.DataGridView EventDGV;
+        private System.Windows.Forms.DataGridView EventDataGrid;
         private System.Windows.Forms.ComboBox Statuscb;
         private System.Windows.Forms.Label label9;
         private object form2;

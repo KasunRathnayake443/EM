@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2025 at 05:53 PM
+-- Generation Time: Jan 27, 2025 at 10:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,18 +45,25 @@ INSERT INTO `customers` (`id`, `Customer_Name`, `Customer_Phone`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `events`
+-- Table structure for table `event`
 --
 
-CREATE TABLE `events` (
-  `Even_id` int(11) NOT NULL,
-  `Event_name` varchar(100) NOT NULL,
-  `Event_Date` date NOT NULL,
+CREATE TABLE `event` (
+  `id` int(11) NOT NULL,
+  `Event_Name` varchar(100) NOT NULL,
+  `Event_Date` varchar(100) NOT NULL,
   `Venue_Name` varchar(100) NOT NULL,
-  `Customer_Name` varchar(100) NOT NULL,
   `Status` varchar(100) NOT NULL,
-  `Duration` int(11) NOT NULL
+  `Hours` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`id`, `Event_Name`, `Event_Date`, `Venue_Name`, `Status`, `Hours`) VALUES
+(1, 'Test', '2002-10-10', 'Test changed', 'Waiting', 6),
+(5, '11', '2025-02-08', 'test 2', 'pending', 11);
 
 -- --------------------------------------------------------
 
@@ -92,10 +99,10 @@ ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `events`
+-- Indexes for table `event`
 --
-ALTER TABLE `events`
-  ADD PRIMARY KEY (`Even_id`);
+ALTER TABLE `event`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `venues`
@@ -114,16 +121,16 @@ ALTER TABLE `customers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `events`
+-- AUTO_INCREMENT for table `event`
 --
-ALTER TABLE `events`
-  MODIFY `Even_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `event`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `venues`
 --
 ALTER TABLE `venues`
-  MODIFY `venue_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `venue_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

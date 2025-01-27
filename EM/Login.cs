@@ -77,5 +77,10 @@ namespace EM
             UserNametxt.Text = "";
             Passwordtxt.Text = "";
         }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
