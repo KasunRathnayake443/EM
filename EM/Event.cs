@@ -27,15 +27,77 @@ namespace EM
             string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ConnectionString;
             connection = new MySqlConnection(connectionString);
             connection.Open();
+
+            DatePick.Format = DateTimePickerFormat.Custom;
+            DatePick.CustomFormat = "yyyy-MM-dd"; 
+            DatePick.ShowUpDown = false;
+            LoadCustomers(); 
+            LoadVenues();
         }
 
         private void Clear()
         {
             EventNametxt.Text = "";
-            CusNametxt.Text = "";
+            
             Durationtxt.Text = "";
             Statuscb.SelectedIndex = -1;
-            EvVenueNametxt.Text = "";
+            VenueNameBox.SelectedIndex = -1;
+            CusNameBox.SelectedIndex = -1;
+
+        }
+
+
+        private void LoadCustomers()
+        {
+            try
+            {
+                string query = "SELECT Customer_Name FROM Customers";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+               
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                CusNameBox.Items.Clear();
+
+              
+                while (reader.Read())
+                {
+                    CusNameBox.Items.Add(reader["Customer_Name"].ToString());
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading customers: " + ex.Message);
+            }
+          
+        }
+
+        private void LoadVenues()
+        {
+            try
+            {
+                string query = "SELECT venue_name FROM venues";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+               
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                
+                VenueNameBox.Items.Clear();
+
+                
+                while (reader.Read())
+                {
+                    VenueNameBox.Items.Add(reader["venue_name"].ToString());
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading venues: " + ex.Message);
+            }
+           
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

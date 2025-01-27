@@ -38,7 +38,6 @@ namespace EM
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.EvVenueNametxt = new System.Windows.Forms.TextBox();
             this.EventNametxt = new System.Windows.Forms.TextBox();
             this.Savebtn = new System.Windows.Forms.Button();
             this.Editbtn = new System.Windows.Forms.Button();
@@ -50,12 +49,14 @@ namespace EM
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.EvDate = new System.Windows.Forms.ComboBox();
             this.Durationtxt = new System.Windows.Forms.TextBox();
             this.EventDGV = new System.Windows.Forms.DataGridView();
             this.Statuscb = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.CusNametxt = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.VenueNameBox = new System.Windows.Forms.ComboBox();
+            this.CusNameBox = new System.Windows.Forms.ComboBox();
+            this.DatePick = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.panel2.SuspendLayout();
@@ -126,7 +127,7 @@ namespace EM
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Modern No. 20", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(593, 267);
+            this.label5.Location = new System.Drawing.Point(606, 267);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(84, 15);
             this.label5.TabIndex = 5;
@@ -152,15 +153,6 @@ namespace EM
             this.label8.TabIndex = 8;
             this.label8.Text = " Duration In Hours";
             this.label8.Click += new System.EventHandler(this.label8_Click);
-            // 
-            // EvVenueNametxt
-            // 
-            this.EvVenueNametxt.Enabled = false;
-            this.EvVenueNametxt.Location = new System.Drawing.Point(594, 288);
-            this.EvVenueNametxt.Name = "EvVenueNametxt";
-            this.EvVenueNametxt.Size = new System.Drawing.Size(135, 20);
-            this.EvVenueNametxt.TabIndex = 12;
-            this.EvVenueNametxt.TextChanged += new System.EventHandler(this.EvVenueNametxt_TextChanged);
             // 
             // EventNametxt
             // 
@@ -285,19 +277,11 @@ namespace EM
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // EvDate
-            // 
-            this.EvDate.FormattingEnabled = true;
-            this.EvDate.Location = new System.Drawing.Point(311, 287);
-            this.EvDate.Name = "EvDate";
-            this.EvDate.Size = new System.Drawing.Size(121, 21);
-            this.EvDate.TabIndex = 20;
-            // 
             // Durationtxt
             // 
-            this.Durationtxt.Location = new System.Drawing.Point(601, 343);
+            this.Durationtxt.Location = new System.Drawing.Point(609, 354);
             this.Durationtxt.Name = "Durationtxt";
-            this.Durationtxt.Size = new System.Drawing.Size(100, 20);
+            this.Durationtxt.Size = new System.Drawing.Size(120, 20);
             this.Durationtxt.TabIndex = 22;
             // 
             // EventDGV
@@ -332,31 +316,55 @@ namespace EM
             this.label9.TabIndex = 26;
             this.label9.Text = "Customer Name";
             // 
-            // CusNametxt
+            // comboBox1
             // 
-            this.CusNametxt.Enabled = false;
-            this.CusNametxt.Location = new System.Drawing.Point(32, 343);
-            this.CusNametxt.Name = "CusNametxt";
-            this.CusNametxt.Size = new System.Drawing.Size(135, 20);
-            this.CusNametxt.TabIndex = 27;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(-15, -15);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 27;
+            // 
+            // VenueNameBox
+            // 
+            this.VenueNameBox.FormattingEnabled = true;
+            this.VenueNameBox.Location = new System.Drawing.Point(609, 295);
+            this.VenueNameBox.Name = "VenueNameBox";
+            this.VenueNameBox.Size = new System.Drawing.Size(121, 21);
+            this.VenueNameBox.TabIndex = 28;
+            // 
+            // CusNameBox
+            // 
+            this.CusNameBox.FormattingEnabled = true;
+            this.CusNameBox.Location = new System.Drawing.Point(32, 353);
+            this.CusNameBox.Name = "CusNameBox";
+            this.CusNameBox.Size = new System.Drawing.Size(135, 21);
+            this.CusNameBox.TabIndex = 29;
+            // 
+            // DatePick
+            // 
+            this.DatePick.Location = new System.Drawing.Point(311, 290);
+            this.DatePick.Name = "DatePick";
+            this.DatePick.Size = new System.Drawing.Size(121, 20);
+            this.DatePick.TabIndex = 30;
             // 
             // Event
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(795, 503);
-            this.Controls.Add(this.CusNametxt);
+            this.Controls.Add(this.DatePick);
+            this.Controls.Add(this.CusNameBox);
+            this.Controls.Add(this.VenueNameBox);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.Statuscb);
             this.Controls.Add(this.EventDGV);
             this.Controls.Add(this.Durationtxt);
-            this.Controls.Add(this.EvDate);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.Deletebtn);
             this.Controls.Add(this.Editbtn);
             this.Controls.Add(this.Savebtn);
             this.Controls.Add(this.EventNametxt);
-            this.Controls.Add(this.EvVenueNametxt);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label5);
@@ -392,7 +400,6 @@ namespace EM
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox EvVenueNametxt;
         private System.Windows.Forms.TextBox EventNametxt;
         private System.Windows.Forms.Button Savebtn;
         private System.Windows.Forms.Button Editbtn;
@@ -404,13 +411,15 @@ namespace EM
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.ComboBox EvDate;
         private System.Windows.Forms.TextBox Durationtxt;
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.DataGridView EventDGV;
         private System.Windows.Forms.ComboBox Statuscb;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox CusNametxt;
         private object form2;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox VenueNameBox;
+        private System.Windows.Forms.ComboBox CusNameBox;
+        private System.Windows.Forms.DateTimePicker DatePick;
     }
 }
