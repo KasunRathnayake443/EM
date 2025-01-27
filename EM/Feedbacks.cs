@@ -1,18 +1,21 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace EM
 {
     public partial class Feedbacks : Form
     {
+        private MySqlConnection connection;
         public Feedbacks()
         {
             InitializeComponent();
@@ -23,7 +26,104 @@ namespace EM
 
         private void Feedbacks_Load(object sender, EventArgs e)
         {
+            string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ConnectionString;
+            connection = new MySqlConnection(connectionString);
+            connection.Open();
 
+            LoadFeedbacksToDataGrid();
+            LoadEvents();
+
+
+            CustomizeFeedbacksDataGridView();
+        }
+
+        private void LoadEvents()
+        {
+            try
+            {
+                string query = "SELECT Event_Name FROM Event";
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+
+                EventBox.Items.Clear();
+
+
+                while (reader.Read())
+                {
+                    EventBox.Items.Add(reader["Event_Name"].ToString());
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading venues: " + ex.Message);
+            }
+        }
+        private void LoadFeedbacksToDataGrid()
+        {
+            try
+            {
+                
+                string query = "SELECT id, Event_name, Punctuality, Hospitality FROM Feedbacks";
+
+                string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ConnectionString;
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        MySqlDataAdapter dataAdapter = new MySqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        dataAdapter.Fill(dt);
+
+                        
+                        FeedbacksDataGrid.DataSource = dt;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading feedback data: " + ex.Message);
+            }
+        }
+
+        private void CustomizeFeedbacksDataGridView()
+        {
+            FeedbacksDataGrid.BackgroundColor = Color.White;
+            FeedbacksDataGrid.BorderStyle = BorderStyle.None;
+            FeedbacksDataGrid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            FeedbacksDataGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+
+            FeedbacksDataGrid.EnableHeadersVisualStyles = false;
+            FeedbacksDataGrid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(41, 128, 185);
+            FeedbacksDataGrid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            FeedbacksDataGrid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            FeedbacksDataGrid.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            FeedbacksDataGrid.DefaultCellStyle.BackColor = Color.White;
+            FeedbacksDataGrid.DefaultCellStyle.ForeColor = Color.Black;
+            FeedbacksDataGrid.DefaultCellStyle.Font = new Font("Segoe UI", 8);
+            FeedbacksDataGrid.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            FeedbacksDataGrid.DefaultCellStyle.SelectionForeColor = Color.White;
+
+            FeedbacksDataGrid.GridColor = Color.FromArgb(230, 230, 230);
+
+            FeedbacksDataGrid.RowHeadersVisible = false;
+
+            FeedbacksDataGrid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+            FeedbacksDataGrid.AlternatingRowsDefaultCellStyle.ForeColor = Color.Black;
+
+            FeedbacksDataGrid.DefaultCellStyle.Padding = new Padding(5);
+
+            FeedbacksDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            FeedbacksDataGrid.ColumnHeadersHeight = 40;
+            FeedbacksDataGrid.RowTemplate.Height = 40;
+
+            FeedbacksDataGrid.AdvancedCellBorderStyle.All = DataGridViewAdvancedCellBorderStyle.None;
         }
 
         private void HospitalitycomboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -37,94 +137,75 @@ namespace EM
         }
         private void ShowFeedbacks()
         {
-            SqlConnection Con = new SqlConnection(@"Data Source=MAHINDA\SQLEXPRESS;Initial Catalog=EventsDb;Integrated Security=True");
-            try
-            {
-                Con.Open();
-                String Query = "Select * from FeedbackTbl";
-                SqlDataAdapter sda = new SqlDataAdapter(Query, Con);
-                SqlCommandBuilder builder = new SqlCommandBuilder(sda);
-                var ds = new DataSet();
-                sda.Fill(ds);
-                FeedbacksDGV.DataSource = ds.Tables[0];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                Con.Close();
-            }
+           
         }
         private void Clear()
         {
-            ENametxt.Text = "";
+            EventBox.SelectedIndex = -1;
             HospitalityCb.SelectedIndex = -1;
             PunctualityCb.SelectedIndex = -1;
-            VenueCb.SelectedIndex = -1;
+         
         }
-        SqlConnection Con = new SqlConnection(@"Data Source=MAHINDA\SQLEXPRESS;Initial Catalog=EventsDb;Integrated Security=True");
+       
 
         private void GetEvent()
 
         {
-            Con.Open();
-            SqlCommand cmd = new SqlCommand("Select EvId from EventTbl", Con);
-            SqlDataReader Rdr;
-            Rdr = cmd.ExecuteReader();
-            DataTable dt = new DataTable();
-            dt.Columns.Add("EventId", typeof(int));
-            dt.Load(Rdr);
-            EventIdCb.ValueMember = "CusId";
-            EventIdCb.DataSource = dt;
-            Con.Close();
+           
         }
         private void GetEventName()
         {
-            //Con.Open();
-            String Query = "Select * from EventTbl where EvId" + EventIdCb.SelectedValue.ToString() + "";
-            SqlCommand cmd = new SqlCommand(Query, Con);
-            DataTable dt = new DataTable();
-            SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            sda.Fill(dt);
-            foreach (DataRow dr in dt.Rows)
-            {
-                ENametxt.Text = dr["EName"].ToString();
-            }
-            Con.Close();
+            
         }
         private void Submitbtn_Click(object sender, EventArgs e)
         {
-            if (ENametxt.Text == "" || VenueCb.SelectedIndex == -1 || HospitalityCb.SelectedIndex == -1 || PunctualityCb.SelectedIndex == -1 )
-            {
-                MessageBox.Show("Missing Information");
-            }
-            else
-            {
-                try
-                {
-                    int Overall = (HospitalityCb.SelectedIndex + PunctualityCb.SelectedIndex + VenueCb.SelectedIndex+3)/3;
+            String EventName = EventBox.Text;
+            String Punctuality = PunctualityCb.Text;
+            String Hospitality = HospitalityCb.Text;
 
-                    Con.Open();
-                    SqlCommand cmd = new SqlCommand("Insert into FeedbackTbl(EvId,EvName,Venue,Punctuality,Hospitality,Overall)Values(@EI,@EN,@V,@P,@H,@O)", Con);
-                    cmd.Parameters.AddWithValue("@EI", EventIdCb.SelectedValue.ToString() );
-                    cmd.Parameters.AddWithValue("@EN", ENametxt.Text);
-                    cmd.Parameters.AddWithValue("@V", VenueCb.SelectedIndex);
-                   cmd.Parameters.AddWithValue("@H", HospitalityCb.SelectedIndex);
-                    cmd.Parameters.AddWithValue("@P", PunctualityCb.SelectedIndex);
-                    cmd.Parameters.AddWithValue("@O", Overall);
-                    
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Venue Added");
-                    Con.Close();
-                    ShowFeedbacks();
-                    Clear();
-                }
-                catch (Exception Ex)
+            if (string.IsNullOrWhiteSpace(EventName) ||
+                string.IsNullOrWhiteSpace(Punctuality) ||
+                string.IsNullOrWhiteSpace(Hospitality))
+            {
+                MessageBox.Show("Please fill in all fields.");
+                return;
+            }
+
+            try
+            {
+                
+                string query = "INSERT INTO Feedbacks (Event_name, Punctuality, Hospitality) " +
+                               "VALUES (@EventName, @Punctuality, @Hospitality)";
+
+              
+                string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ConnectionString;
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    MessageBox.Show(Ex.Message);
+                    connection.Open();
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        
+                        cmd.Parameters.AddWithValue("@EventName", EventName);
+                        cmd.Parameters.AddWithValue("@Punctuality", Punctuality);
+                        cmd.Parameters.AddWithValue("@Hospitality", Hospitality);
+
+                       
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+
+                MessageBox.Show("Feedback submitted successfully!");
+
+                LoadFeedbacksToDataGrid();
+
+
+                Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error submitting feedback: " + ex.Message);
             }
         }
 
@@ -171,6 +252,21 @@ namespace EM
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void FeedbacksDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void Resetbtn_Click(object sender, EventArgs e)
+        {
+            Clear();
         }
     }
 }

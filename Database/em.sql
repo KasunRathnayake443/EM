@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2025 at 10:29 AM
+-- Generation Time: Jan 27, 2025 at 11:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -68,6 +68,27 @@ INSERT INTO `event` (`id`, `Event_Name`, `Event_Date`, `Venue_Name`, `Status`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `feedbacks`
+--
+
+CREATE TABLE `feedbacks` (
+  `id` int(11) NOT NULL,
+  `Event_name` varchar(100) NOT NULL,
+  `Punctuality` varchar(100) NOT NULL,
+  `Hospitality` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `feedbacks`
+--
+
+INSERT INTO `feedbacks` (`id`, `Event_name`, `Punctuality`, `Hospitality`) VALUES
+(1, '11', 'Excellent', 'OK'),
+(2, 'Test', 'Good', 'OK');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `venues`
 --
 
@@ -105,6 +126,12 @@ ALTER TABLE `event`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `feedbacks`
+--
+ALTER TABLE `feedbacks`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `venues`
 --
 ALTER TABLE `venues`
@@ -125,6 +152,12 @@ ALTER TABLE `customers`
 --
 ALTER TABLE `event`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `feedbacks`
+--
+ALTER TABLE `feedbacks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `venues`
